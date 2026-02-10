@@ -40,6 +40,12 @@
             overflow-x: hidden;
         }
        
+        /* Modo triste */
+        body.sad-mode {
+            background: linear-gradient(135deg, #2c3e50, #4a6572) !important;
+            transition: background 1s ease;
+        }
+       
         /* ========== ANIMACIONES ========== */
         @keyframes heartbeat {
             0%, 100% { transform: scale(1); }
@@ -112,6 +118,22 @@
             60% { transform: translateY(-10px); }
         }
        
+        @keyframes sadPulse {
+            0%, 100% { opacity: 0.6; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.05); }
+        }
+       
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0.3; }
+        }
+       
+        @keyframes tearDrop {
+            0% { transform: translateY(-10px) scale(0.5); opacity: 0; }
+            50% { transform: translateY(0) scale(1); opacity: 1; }
+            100% { transform: translateY(20px) scale(0.5); opacity: 0; }
+        }
+       
         /* ========== CONTENEDOR PRINCIPAL ========== */
         .container {
             max-width: 900px;
@@ -125,6 +147,13 @@
             animation: bloom 1.2s ease-out;
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.5s ease;
+        }
+       
+        .container.sad-mode {
+            background-color: rgba(255, 255, 255, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
         }
        
         /* ========== GALERÍA DE ELEMENTOS DE SAN VALENTÍN ========== */
@@ -357,6 +386,13 @@
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
             border: 2px solid rgba(230, 57, 70, 0.2);
             animation: slideIn 0.8s ease-out 0.2s both;
+            transition: all 0.5s ease;
+        }
+       
+        .music-control.sad-mode {
+            background: linear-gradient(45deg, rgba(100, 100, 100, 0.1), rgba(120, 120, 120, 0.05));
+            border: 2px solid rgba(100, 100, 100, 0.2);
+            animation: fadeOut 1s ease-out forwards;
         }
        
         .music-title {
@@ -373,6 +409,15 @@
         .music-title i {
             color: var(--color-amor);
             animation: musicNote 2s infinite;
+        }
+       
+        .music-title.sad-mode {
+            color: #666;
+        }
+       
+        .music-title.sad-mode i {
+            color: #666;
+            animation: sadPulse 2s infinite;
         }
        
         .music-buttons {
@@ -409,6 +454,11 @@
             box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
         }
        
+        .music-btn.sad-mode {
+            background: linear-gradient(45deg, #666, #888);
+            box-shadow: 0 5px 15px rgba(100, 100, 100, 0.3);
+        }
+       
         .music-progress {
             width: 100%;
             margin-top: 15px;
@@ -423,12 +473,20 @@
             margin-bottom: 5px;
         }
        
+        .progress-bar.sad-mode {
+            background: rgba(100, 100, 100, 0.1);
+        }
+       
         .progress-fill {
             height: 100%;
             background: linear-gradient(45deg, #e63946, #ff6b8b);
             width: 0%;
             transition: width 0.3s;
             border-radius: 4px;
+        }
+       
+        .progress-fill.sad-mode {
+            background: linear-gradient(45deg, #666, #888);
         }
        
         .time-display {
@@ -513,6 +571,7 @@
             text-align: center;
             margin: 30px 0;
             animation: slideIn 1s ease-out 0.7s both;
+            position: relative;
         }
        
         .ask-button {
@@ -562,6 +621,24 @@
             transform: translateY(-4px) scale(1.02);
         }
        
+        .ask-button.disabled {
+            background: linear-gradient(45deg, #888, #aaa);
+            cursor: not-allowed;
+            animation: none;
+            opacity: 0.7;
+        }
+       
+        .ask-button.disabled:hover {
+            transform: none;
+            box-shadow: 0 10px 30px rgba(230, 57, 70, 0.4);
+        }
+       
+        .ask-button.sad-mode {
+            background: linear-gradient(45deg, #666, #888);
+            box-shadow: 0 10px 30px rgba(100, 100, 100, 0.4);
+            animation: sadPulse 2s infinite;
+        }
+       
         /* ========== DECORACIONES ========== */
         .floating-heart {
             position: absolute;
@@ -577,6 +654,21 @@
         .heart-3 { bottom: 18%; left: 7%; animation-delay: 1s; color: #ffafbd; }
         .heart-4 { bottom: 12%; right: 9%; animation-delay: 1.5s; color: #ffc3a0; }
        
+        /* Corazones tristes */
+        .floating-sad {
+            position: absolute;
+            font-size: 1.5rem;
+            opacity: 0.5;
+            z-index: 0;
+            animation: float 6s infinite ease-in-out;
+            pointer-events: none;
+        }
+       
+        .sad-1 { top: 10%; left: 5%; animation-delay: 0s; color: #888; }
+        .sad-2 { top: 15%; right: 7%; animation-delay: 1s; color: #999; }
+        .sad-3 { bottom: 20%; left: 6%; animation-delay: 2s; color: #777; }
+        .sad-4 { bottom: 15%; right: 8%; animation-delay: 3s; color: #888; }
+       
         .sparkle {
             position: absolute;
             width: 8px;
@@ -586,6 +678,17 @@
             box-shadow: 0 0 10px #fff;
             animation: sparkle 2s infinite;
             pointer-events: none;
+        }
+       
+        /* Lágrimas */
+        .tear {
+            position: absolute;
+            width: 3px;
+            height: 10px;
+            background: rgba(100, 150, 255, 0.6);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: tearDrop 2s infinite ease-in-out;
         }
        
         /* ========== ENCABEZADO ========== */
@@ -606,6 +709,11 @@
             animation: glow 3s infinite alternate;
         }
        
+        .header h1.sad-mode {
+            color: #666;
+            animation: sadPulse 3s infinite;
+        }
+       
         .header h1:after {
             content: '';
             position: absolute;
@@ -617,12 +725,21 @@
             border-radius: 2px;
         }
        
+        .header h1.sad-mode:after {
+            background: linear-gradient(to right, transparent, #666, transparent);
+        }
+       
         .heart-icon {
             color: var(--color-amor);
             font-size: 2.2rem;
             margin: 0 15px;
             animation: heartbeat 1.5s infinite;
             display: inline-block;
+        }
+       
+        .heart-icon.sad-mode {
+            color: #666;
+            animation: sadPulse 2s infinite;
         }
        
         /* ========== MENSAJE ========== */
@@ -636,6 +753,12 @@
             position: relative;
             z-index: 1;
             animation: slideIn 1s ease-out;
+            transition: all 0.5s ease;
+        }
+       
+        .message.sad-mode {
+            color: #666;
+            opacity: 0.8;
         }
        
         .message p {
@@ -650,6 +773,10 @@
             font-family: 'Dancing Script', cursive;
             font-size: 1.8rem;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+       
+        .princess.sad-mode {
+            color: #666;
         }
        
         .new-beginning {
@@ -672,6 +799,13 @@
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
         }
        
+        .new-beginning.sad-mode {
+            border: 2px dashed #888;
+            color: #666;
+            background: linear-gradient(45deg, #e9ecef, #dee2e6);
+            animation: sadPulse 3s infinite;
+        }
+       
         /* ========== CONTADOR HASTA SAN VALENTÍN ========== */
         .timer-container {
             background: linear-gradient(45deg, var(--color-amor-claro), #ff7eb3);
@@ -685,6 +819,12 @@
             overflow: hidden;
             z-index: 1;
             animation: slideIn 1.2s ease-out 0.3s both;
+            transition: all 0.5s ease;
+        }
+       
+        .timer-container.sad-mode {
+            background: linear-gradient(45deg, #666, #888);
+            animation: fadeOut 1s ease-out forwards;
         }
        
         .timer-container:before {
@@ -702,11 +842,18 @@
        
         .timer-title {
             font-size: 2rem;
-            margin-bottom: 35px;
+            margin-bottom: 10px;
             font-weight: 700;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
             letter-spacing: 1px;
             animation: fadeIn 1s ease-out;
+        }
+       
+        .timer-subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            font-style: italic;
+            opacity: 0.9;
         }
        
         .sync-status {
@@ -762,6 +909,12 @@
         .time-unit:hover {
             transform: translateY(-10px);
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+       
+        .time-unit.sad-mode {
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: sadPulse 2s infinite;
         }
        
         .time-value {
@@ -840,6 +993,14 @@
             transform: translateY(-2px);
         }
        
+        .reset-btn.sad-mode {
+            color: #666;
+        }
+       
+        .reset-btn.sad-mode:before {
+            background: linear-gradient(90deg, transparent, rgba(100, 100, 100, 0.1), transparent);
+        }
+       
         /* ========== FIRMA ========== */
         .signature {
             text-align: right;
@@ -852,11 +1013,20 @@
             position: relative;
             z-index: 1;
             animation: fadeIn 1.5s ease-out 0.5s both;
+            transition: all 0.5s ease;
+        }
+       
+        .signature.sad-mode {
+            color: #666;
         }
        
         .signature i {
             margin-left: 10px;
             animation: heartbeat 1.5s infinite;
+        }
+       
+        .signature.sad-mode i {
+            animation: sadPulse 2s infinite;
         }
        
         /* ========== PIE DE PÁGINA ========== */
@@ -868,6 +1038,11 @@
             position: relative;
             z-index: 1;
             animation: fadeIn 2s ease-out;
+            transition: all 0.5s ease;
+        }
+       
+        .footer.sad-mode {
+            color: #666;
         }
        
         .footer-heart {
@@ -875,6 +1050,11 @@
             animation: heartbeat 2s infinite;
             display: inline-block;
             margin: 0 5px;
+        }
+       
+        .footer-heart.sad-mode {
+            color: #666;
+            animation: sadPulse 2s infinite;
         }
        
         /* ========== MENSAJES ESPECIALES ========== */
@@ -910,14 +1090,61 @@
             opacity: 0.6;
         }
        
-        /* ========== BOTÓN SONIDO ========== */
-        .sound-btn {
+        /* Mensaje triste */
+        .sad-message {
+            animation: slideIn 0.8s ease-out;
+            margin-bottom: 25px;
+        }
+       
+        .sad-message-content {
+            background: linear-gradient(45deg, #666, #888);
+            padding: 20px 30px;
+            border-radius: 15px;
+            color: white;
+            text-align: center;
+            font-weight: 700;
+            font-size: 1.3rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            animation: sadPulse 3s infinite;
+        }
+       
+        /* ========== BOTÓN SONIDO MEJORADO ========== */
+        .sound-container {
             position: fixed;
             top: 25px;
             right: 25px;
-            width: 50px;
-            height: 50px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 12px 18px;
+            border-radius: 35px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            animation: bloom 1s ease-out 1s both;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+       
+        .sound-container:hover {
+            background: rgba(255, 255, 255, 1);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+        }
+       
+        .sound-container.sad-mode {
             background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+       
+        .sound-btn {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(45deg, var(--color-amor), #ff6b8b);
             border: none;
             border-radius: 50%;
             cursor: pointer;
@@ -925,20 +1152,127 @@
             align-items: center;
             justify-content: center;
             font-size: 1.3rem;
-            color: var(--color-amor);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
-            z-index: 1000;
+            color: white;
             transition: all 0.3s;
-            animation: bloom 1s ease-out 1s both;
+            flex-shrink: 0;
         }
        
         .sound-btn:hover {
             transform: scale(1.1);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-            background: white;
+            box-shadow: 0 6px 15px rgba(230, 57, 70, 0.4);
         }
        
-        /* ========== RESPUESTA BOTONES ========== */
+        .sound-btn.sad-mode {
+            background: linear-gradient(45deg, #666, #888);
+        }
+       
+        .sound-btn.sad-mode:hover {
+            box-shadow: 0 6px 15px rgba(100, 100, 100, 0.4);
+        }
+       
+        .volume-slider-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+       
+        .sound-container:hover .volume-slider-container {
+            width: 180px;
+            opacity: 1;
+        }
+       
+        .volume-slider {
+            width: 100%;
+            height: 12px; /* Más gruesa para móviles */
+            -webkit-appearance: none;
+            appearance: none;
+            background: linear-gradient(to right, rgba(230, 57, 70, 0.1), rgba(230, 57, 70, 0.3));
+            border-radius: 10px;
+            outline: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid rgba(230, 57, 70, 0.2);
+        }
+       
+        .volume-slider.sad-mode {
+            background: linear-gradient(to right, rgba(100, 100, 100, 0.1), rgba(100, 100, 100, 0.3));
+            border: 1px solid rgba(100, 100, 100, 0.2);
+        }
+       
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px; /* Más grande para móviles */
+            height: 24px; /* Más grande para móviles */
+            border-radius: 50%;
+            background: var(--color-amor);
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            transition: all 0.2s;
+            border: 3px solid white;
+        }
+       
+        .volume-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+            box-shadow: 0 4px 12px rgba(230, 57, 70, 0.6);
+        }
+       
+        .volume-slider.sad-mode::-webkit-slider-thumb {
+            background: #666;
+        }
+       
+        .volume-slider::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--color-amor);
+            cursor: pointer;
+            border: 3px solid white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            transition: all 0.2s;
+        }
+       
+        .volume-slider::-moz-range-thumb:hover {
+            transform: scale(1.2);
+            box-shadow: 0 4px 12px rgba(230, 57, 70, 0.6);
+        }
+       
+        .volume-slider.sad-mode::-moz-range-thumb {
+            background: #666;
+        }
+       
+        .volume-percentage {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--color-amor);
+            min-width: 40px;
+            text-align: center;
+            background: rgba(230, 57, 70, 0.1);
+            padding: 5px 10px;
+            border-radius: 15px;
+            border: 1px solid rgba(230, 57, 70, 0.2);
+        }
+       
+        .volume-percentage.sad-mode {
+            color: #666;
+            background: rgba(100, 100, 100, 0.1);
+            border: 1px solid rgba(100, 100, 100, 0.2);
+        }
+       
+        .volume-icon {
+            color: var(--color-amor);
+            font-size: 1.1rem;
+        }
+       
+        .volume-icon.sad-mode {
+            color: #666;
+        }
+       
+        /* ========== RESPONSE BUTTONS ========== */
         .response-buttons {
             display: flex;
             justify-content: center;
@@ -977,6 +1311,16 @@
        
         .no-btn:hover {
             animation: bounce 0.5s ease;
+        }
+       
+        .response-btn.sad-mode {
+            background: linear-gradient(45deg, #666, #888);
+            cursor: not-allowed;
+        }
+       
+        .response-btn.sad-mode:hover {
+            transform: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
        
         /* ========== SAN VALENTÍN LLEGÓ ========== */
@@ -1097,11 +1441,29 @@
                 font-size: 1.1rem;
             }
            
-            .sound-btn {
+            .sound-container {
                 top: 15px;
                 right: 15px;
-                width: 45px;
-                height: 45px;
+                padding: 10px 15px;
+            }
+           
+            .sound-container:hover .volume-slider-container {
+                width: 160px;
+            }
+           
+            .sound-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+           
+            .volume-slider {
+                height: 10px;
+            }
+           
+            .volume-slider::-webkit-slider-thumb {
+                width: 22px;
+                height: 22px;
             }
            
             .valentine-title {
@@ -1179,10 +1541,27 @@
                 font-size: 1.5rem;
             }
            
-            .sound-btn {
-                width: 40px;
-                height: 40px;
-                font-size: 1.1rem;
+            .sound-container {
+                padding: 8px 12px;
+            }
+           
+            .sound-container:hover .volume-slider-container {
+                width: 140px;
+            }
+           
+            .volume-slider {
+                height: 10px;
+            }
+           
+            .volume-slider::-webkit-slider-thumb {
+                width: 20px;
+                height: 20px;
+            }
+           
+            .volume-percentage {
+                font-size: 0.9rem;
+                min-width: 35px;
+                padding: 4px 8px;
             }
            
             .valentine-title {
@@ -1262,6 +1641,40 @@
                 font-size: 1.1rem;
             }
            
+            .sound-container {
+                padding: 6px 10px;
+            }
+           
+            .sound-btn {
+                width: 38px;
+                height: 38px;
+                font-size: 1.1rem;
+            }
+           
+            .sound-container:hover .volume-slider-container {
+                width: 120px;
+            }
+           
+            .volume-slider {
+                height: 8px;
+            }
+           
+            .volume-slider::-webkit-slider-thumb {
+                width: 18px;
+                height: 18px;
+                border: 2px solid white;
+            }
+           
+            .volume-percentage {
+                font-size: 0.8rem;
+                min-width: 30px;
+                padding: 3px 6px;
+            }
+           
+            .volume-icon {
+                font-size: 0.9rem;
+            }
+           
             .valentine-title {
                 font-size: 1.6rem;
                 margin-bottom: 20px;
@@ -1296,14 +1709,35 @@
                 padding: 12px;
             }
         }
+       
+        @media (max-width: 360px) {
+            .sound-container {
+                top: 10px;
+                right: 10px;
+                padding: 5px 8px;
+            }
+           
+            .sound-container:hover .volume-slider-container {
+                width: 110px;
+            }
+           
+            .sound-btn {
+                width: 35px;
+                height: 35px;
+                font-size: 1rem;
+            }
+           
+            .volume-percentage {
+                font-size: 0.75rem;
+                min-width: 28px;
+            }
+        }
     </style>
 </head>
 <body>
-    <!-- Audio oculto para la música -->
+    <!-- Audio con TU enlace de música actualizado -->
     <audio id="backgroundMusic" loop>
-        <!-- AQUÍ DEBES PONER EL LINK A TU ARCHIVO DE MÚSICA EN GITHUB -->
-        <source src="https://github.com/jpvaleishion/San-Valentin/blob/main/music/Te%20quiero%20-%20Hombres%20G%20(Letra%E2%A7%B8Lyrics).mp3" type="audio/mpeg">
-        <source src="https://raw.githubusercontent.com/tu-usuario/tu-repositorio/main/musica-san-valentin.ogg" type="audio/ogg">
+        <source src="https://github.com/jpvaleishion/San-Valentin/raw/refs/heads/main/music/Te%20quiero%20-%20Hombres%20G%20(Letra%E2%A7%B8Lyrics).mp3" type="audio/mpeg">
         Tu navegador no soporta el elemento de audio.
     </audio>
    
@@ -1317,15 +1751,23 @@
                 <i class="fas fa-play-circle"></i> Iniciar Música y Experiencia
             </button>
             <p style="margin-top: 20px; font-size: 0.9rem; opacity: 0.8;">
-                La música comenzará automáticamente y se repetirá
+                La música comenzará automáticamente con volumen al 30% para proteger tus oídos
             </p>
         </div>
     </div>
    
-    <!-- Botón de sonido flotante -->
-    <button class="sound-btn" id="soundBtn" title="Activar/Desactivar música" style="display: none;">
-        <i class="fas fa-volume-up"></i>
-    </button>
+    <!-- Botón de sonido flotante con control de volumen -->
+    <div class="sound-container" id="soundContainer" style="display: none;">
+        <button class="sound-btn" id="soundBtn" title="Activar/Desactivar música">
+            <i class="fas fa-volume-up"></i>
+        </button>
+        <div class="volume-slider-container">
+            <i class="fas fa-volume-down volume-icon"></i>
+            <input type="range" min="0" max="100" value="30" class="volume-slider" id="volumeSlider" title="Control de volumen">
+            <i class="fas fa-volume-up volume-icon"></i>
+            <div class="volume-percentage" id="volumePercentage">30%</div>
+        </div>
+    </div>
    
     <!-- Notas musicales decorativas -->
     <div class="music-note note-1"><i class="fas fa-music"></i></div>
@@ -1461,6 +1903,17 @@
             <!-- Mensajes especiales aparecen aquí -->
             <div id="specialMessages"></div>
            
+            <!-- Cuando llegue San Valentín y no haya respuesta -->
+            <div id="sadMessageContainer" style="display: none;">
+                <div class="sad-message">
+                    <div class="sad-message-content">
+                        <h3>😔 El tiempo se acabó...</h3>
+                        <p>San Valentín llegó y aún no tengo tu respuesta...</p>
+                        <p>💔 ¿Habrá una oportunidad para mí?</p>
+                    </div>
+                </div>
+            </div>
+           
             <!-- Cuando llegue San Valentín -->
             <div id="valentineArrived" style="display: none;">
                 <div class="valentine-arrived">
@@ -1471,7 +1924,7 @@
            
             <!-- Contador hasta San Valentín -->
             <div id="countdownContainer">
-                <div class="timer-title" id="countdownTitle">Faltan para San Valentín:</div>
+                <div class="timer-title" id="countdownTitle">Quedan:</div>
                
                 <!-- Estado de sincronización -->
                 <div class="sync-status" id="syncStatus">
@@ -1498,6 +1951,9 @@
                         <div class="time-label">SEGUNDOS</div>
                     </div>
                 </div>
+               
+                <!-- Subtítulo después del contador -->
+                <div class="timer-subtitle" id="timerSubtitle">para una respuesta...</div>
             </div>
            
             <!-- Botón reiniciar -->
@@ -1539,6 +1995,9 @@
         const totalValentines = 5;
         let backgroundMusic = null;
         let musicProgressInterval = null;
+        let hasResponded = false; // Nueva variable para controlar si ya respondió
+        let responseMessageShown = false; // Controla si el mensaje especial ya se mostró
+        let isSadMode = false; // Modo triste cuando el tiempo se acaba sin respuesta
        
         // Fecha de San Valentín (14 de febrero del año actual)
         const currentYear = new Date().getFullYear();
@@ -1560,6 +2019,9 @@
            
             // Inicializar el elemento de audio
             backgroundMusic = document.getElementById('backgroundMusic');
+           
+            // Configurar el volumen inicial al 30% (cambiado de 40% a 30%)
+            backgroundMusic.volume = 0.3;
            
             // Configurar eventos de audio
             setupAudioEvents();
@@ -1585,7 +2047,7 @@
                    
                     // Mostrar contenido principal
                     document.getElementById('mainContainer').style.display = 'block';
-                    document.getElementById('soundBtn').style.display = 'flex';
+                    document.getElementById('soundContainer').style.display = 'flex';
                    
                     // Iniciar música automáticamente
                     startMusic();
@@ -1637,6 +2099,144 @@
         }
        
         // ==============================================
+        // CONTROL DE VOLUMEN
+        // ==============================================
+        function setupVolumeControls() {
+            const volumeSlider = document.getElementById('volumeSlider');
+            const volumePercentage = document.getElementById('volumePercentage');
+            const soundBtn = document.getElementById('soundBtn');
+            const soundContainer = document.getElementById('soundContainer');
+           
+            // Configurar slider de volumen
+            volumeSlider.addEventListener('input', function() {
+                updateVolumeFromSlider();
+            });
+           
+            // Configurar evento de cambio (para cuando se suelta)
+            volumeSlider.addEventListener('change', function() {
+                updateVolumeFromSlider();
+            });
+           
+            // Configurar botón de silenciar
+            soundBtn.addEventListener('click', function() {
+                soundEnabled = !soundEnabled;
+               
+                if (soundEnabled) {
+                    // Activar sonido y restaurar volumen
+                    backgroundMusic.volume = volumeSlider.value / 100;
+                    updateVolumeIcon(backgroundMusic.volume);
+                    updateSoundButton(soundBtn);
+                   
+                    // Si estaba pausada, reproducir
+                    if (backgroundMusic.paused) {
+                        backgroundMusic.play();
+                        document.getElementById('playBtn').classList.add('active');
+                        document.getElementById('pauseBtn').classList.remove('active');
+                        startProgressUpdate();
+                    }
+                } else {
+                    // Silenciar
+                    backgroundMusic.volume = 0;
+                    updateVolumeIcon(0);
+                    updateSoundButton(soundBtn);
+                }
+            });
+           
+            // Configurar scroll del mouse para ajustar volumen
+            soundContainer.addEventListener('wheel', function(e) {
+                e.preventDefault();
+               
+                // Determinar dirección del scroll
+                const delta = e.deltaY || e.detail || e.wheelDelta;
+                const currentValue = parseInt(volumeSlider.value);
+                let newValue;
+               
+                if (delta > 0) {
+                    // Scroll hacia abajo - bajar volumen
+                    newValue = Math.max(0, currentValue - 5);
+                } else {
+                    // Scroll hacia arriba - subir volumen
+                    newValue = Math.min(100, currentValue + 5);
+                }
+               
+                // Actualizar slider y volumen
+                volumeSlider.value = newValue;
+                updateVolumeFromSlider();
+               
+                // Mostrar feedback visual
+                showVolumeFeedback(newValue);
+            });
+           
+            // Cargar volumen guardado o usar 30% por defecto
+            const savedVolume = localStorage.getItem('valentineVolume');
+            if (savedVolume !== null) {
+                volumeSlider.value = savedVolume;
+                backgroundMusic.volume = savedVolume / 100;
+                volumePercentage.textContent = savedVolume + '%';
+                updateVolumeIcon(savedVolume / 100);
+            } else {
+                // Volumen por defecto al 30% (cambiado de 40% a 30%)
+                volumeSlider.value = 30;
+                backgroundMusic.volume = 0.3;
+                volumePercentage.textContent = '30%';
+                updateVolumeIcon(0.3);
+            }
+        }
+       
+        function updateVolumeFromSlider() {
+            const volumeSlider = document.getElementById('volumeSlider');
+            const volumePercentage = document.getElementById('volumePercentage');
+           
+            const volume = volumeSlider.value / 100;
+            backgroundMusic.volume = volume;
+            volumePercentage.textContent = volumeSlider.value + '%';
+           
+            // Cambiar ícono según volumen
+            updateVolumeIcon(volume);
+           
+            // Asegurar que el sonido esté activado
+            if (volume > 0) {
+                soundEnabled = true;
+                updateSoundButton(document.getElementById('soundBtn'));
+            }
+           
+            // Guardar preferencia de volumen
+            localStorage.setItem('valentineVolume', volumeSlider.value);
+        }
+       
+        function showVolumeFeedback(volume) {
+            const volumePercentage = document.getElementById('volumePercentage');
+           
+            // Efecto visual temporal
+            volumePercentage.style.transform = 'scale(1.2)';
+            volumePercentage.style.backgroundColor = 'rgba(230, 57, 70, 0.2)';
+           
+            setTimeout(() => {
+                volumePercentage.style.transform = 'scale(1)';
+                volumePercentage.style.backgroundColor = 'rgba(230, 57, 70, 0.1)';
+            }, 300);
+        }
+       
+        function updateVolumeIcon(volume) {
+            const soundBtn = document.getElementById('soundBtn');
+            const icon = soundBtn.querySelector('i');
+           
+            if (volume === 0) {
+                icon.className = 'fas fa-volume-mute';
+                soundBtn.title = 'Activar sonido';
+            } else if (volume < 0.3) {
+                icon.className = 'fas fa-volume-off';
+                soundBtn.title = 'Ajustar volumen';
+            } else if (volume < 0.6) {
+                icon.className = 'fas fa-volume-down';
+                soundBtn.title = 'Ajustar volumen';
+            } else {
+                icon.className = 'fas fa-volume-up';
+                soundBtn.title = 'Ajustar volumen';
+            }
+        }
+       
+        // ==============================================
         // CONTROL DE MÚSICA
         // ==============================================
         function startMusic() {
@@ -1647,9 +2247,10 @@
            
             if (playPromise !== undefined) {
                 playPromise.then(() => {
-                    console.log('🎵 Música iniciada automáticamente');
+                    console.log('🎵 Música iniciada automáticamente al 30% de volumen');
                     soundEnabled = true;
                     updateSoundButton(document.getElementById('soundBtn'));
+                    updateVolumeIcon(audio.volume);
                    
                     // Actualizar botones
                     document.getElementById('playBtn').classList.add('active');
@@ -1664,6 +2265,31 @@
                     // Mostrar mensaje para que el usuario haga clic
                     showMusicError();
                 });
+            }
+        }
+       
+        // Función para activar modo triste en la música
+        function activateSadMusic() {
+            if (backgroundMusic) {
+                // Reducir la velocidad de reproducción (playback rate)
+                backgroundMusic.playbackRate = 0.7; // 30% más lento
+               
+                // Aplicar filtro de audio si está disponible
+                try {
+                    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                    const source = audioContext.createMediaElementSource(backgroundMusic);
+                    const filter = audioContext.createBiquadFilter();
+                   
+                    filter.type = "lowpass";
+                    filter.frequency.value = 1000; // Frecuencia más baja para sonido apagado
+                   
+                    source.connect(filter);
+                    filter.connect(audioContext.destination);
+                   
+                    console.log('🎵 Modo triste activado: música más lenta y apagada');
+                } catch (e) {
+                    console.log('🔇 Efectos de audio avanzados no disponibles');
+                }
             }
         }
        
@@ -1691,6 +2317,7 @@
                     backgroundMusic.play();
                     soundEnabled = true;
                     updateSoundButton(document.getElementById('soundBtn'));
+                    updateVolumeIcon(backgroundMusic.volume);
                    
                     playBtn.classList.add('active');
                     pauseBtn.classList.remove('active');
@@ -1706,9 +2333,6 @@
             pauseBtn.addEventListener('click', function() {
                 if (backgroundMusic) {
                     backgroundMusic.pause();
-                    soundEnabled = false;
-                    updateSoundButton(document.getElementById('soundBtn'));
-                   
                     pauseBtn.classList.add('active');
                     playBtn.classList.remove('active');
                    
@@ -1726,6 +2350,7 @@
                     backgroundMusic.play();
                     soundEnabled = true;
                     updateSoundButton(document.getElementById('soundBtn'));
+                    updateVolumeIcon(backgroundMusic.volume);
                    
                     playBtn.classList.add('active');
                     pauseBtn.classList.remove('active');
@@ -1802,8 +2427,8 @@
             // Crear corazones flotantes continuos
             startFloatingHearts();
            
-            // Configurar botón de sonido
-            setupSoundButton();
+            // Configurar controles de volumen
+            setupVolumeControls();
            
             // Configurar fondo según hora
             updateBackgroundByTime();
@@ -1943,10 +2568,20 @@
             // Verificar si ya hay una respuesta guardada
             const savedResponse = localStorage.getItem('valentineResponse');
             if (savedResponse === 'yes') {
+                hasResponded = true;
                 showAcceptedResponse();
+                // Desactivar botón después de responder
+                askButton.classList.add('disabled');
+                askButton.disabled = true;
+                askButton.style.cursor = 'not-allowed';
             }
            
             askButton.addEventListener('click', function() {
+                // Si ya respondió, no hacer nada
+                if (hasResponded) {
+                    return;
+                }
+               
                 // Mostrar botones de respuesta con animación
                 responseButtons.style.display = 'flex';
                 setTimeout(() => {
@@ -1967,7 +2602,15 @@
            
             // Botón SÍ
             yesBtn.addEventListener('click', async function() {
-                showAcceptedResponse();
+                // Marcar que ya respondió
+                hasResponded = true;
+               
+                // Mostrar respuesta aceptada (solo una vez)
+                if (!responseMessageShown) {
+                    showAcceptedResponse();
+                    responseMessageShown = true;
+                }
+               
                 launchConfetti();
                 createSpecialHearts();
                
@@ -1983,6 +2626,11 @@
                     responseButtons.style.display = 'none';
                 }, 500);
                
+                // Desactivar botón principal
+                askButton.classList.add('disabled');
+                askButton.disabled = true;
+                askButton.style.cursor = 'not-allowed';
+               
                 // Reproducir sonido de celebración
                 if (soundEnabled) {
                     playCelebrationSound();
@@ -1992,6 +2640,9 @@
             // Botón NO (con movimiento divertido)
             let noCount = 0;
             noBtn.addEventListener('click', async function() {
+                // Marcar que ya respondió (pero no positivamente)
+                hasResponded = true;
+               
                 noCount++;
                
                 if (noCount < 3) {
@@ -2034,7 +2685,10 @@
             askButton.style.background = 'linear-gradient(45deg, #4CAF50, #8BC34A)';
             askButton.style.animation = 'pulse 1.5s infinite';
            
-            showResponseMessage('¡SÍ! 💖', '¡Eres el mejor regalo que podría pedir! ¡Feliz San Valentín! 💕');
+            // Solo mostrar el mensaje especial si no se ha mostrado antes
+            if (!responseMessageShown) {
+                showResponseMessage('¡SÍ! 💖', '¡Eres el mejor regalo que podría pedir! ¡Feliz San Valentín! 💕');
+            }
         }
        
         function showResponseMessage(title, message) {
@@ -2051,12 +2705,7 @@
            
             messagesContainer.appendChild(messageDiv);
            
-            // Remover después de 15 segundos
-            setTimeout(() => {
-                messageDiv.style.opacity = '0';
-                messageDiv.style.transition = 'opacity 1s';
-                setTimeout(() => messageDiv.remove(), 1000);
-            }, 15000);
+            // NO remover después de tiempo - se queda permanentemente
         }
        
         // ==============================================
@@ -2073,7 +2722,14 @@
            
             // Si ya es San Valentín
             if (diff <= 0) {
-                showValentinesDayArrived();
+                // Verificar si ya respondió
+                if (!hasResponded && !isSadMode) {
+                    // Activar modo triste solo si no ha respondido
+                    activateSadMode();
+                } else if (hasResponded) {
+                    // Si ya respondió, mostrar felicitación normal
+                    showValentinesDayArrived();
+                }
                 return;
             }
            
@@ -2091,8 +2747,88 @@
             // Efectos visuales especiales
             updateCountdownEffects(days, hours, minutes, seconds);
            
-            // Mensajes especiales en días clave
-            checkCountdownSpecialMoments(days, hours, minutes, seconds);
+            // Mensajes especiales en días clave (solo si no ha respondido)
+            if (!hasResponded) {
+                checkCountdownSpecialMoments(days, hours, minutes, seconds);
+            }
+        }
+       
+        function activateSadMode() {
+            if (isSadMode) return; // Evitar activar múltiples veces
+           
+            isSadMode = true;
+           
+            // Ocultar contador normal
+            const countdownContainer = document.getElementById('countdownContainer');
+            countdownContainer.style.display = 'none';
+           
+            // Mostrar mensaje triste
+            const sadMessageContainer = document.getElementById('sadMessageContainer');
+            sadMessageContainer.style.display = 'block';
+           
+            // Activar música lenta y apagada
+            activateSadMusic();
+           
+            // Cambiar estilos a modo triste
+            document.body.classList.add('sad-mode');
+            document.querySelector('.container').classList.add('sad-mode');
+            document.querySelector('.header h1').classList.add('sad-mode');
+            document.querySelectorAll('.heart-icon').forEach(icon => icon.classList.add('sad-mode'));
+            document.querySelector('.music-control').classList.add('sad-mode');
+            document.querySelector('.music-title').classList.add('sad-mode');
+            document.querySelector('.music-title i').classList.add('sad-mode');
+            document.querySelectorAll('.music-btn').forEach(btn => btn.classList.add('sad-mode'));
+            document.querySelector('.progress-bar').classList.add('sad-mode');
+            document.querySelector('.progress-fill').classList.add('sad-mode');
+            document.querySelector('.ask-button').classList.add('sad-mode');
+            document.querySelector('.message').classList.add('sad-mode');
+            document.querySelector('.princess').classList.add('sad-mode');
+            document.querySelector('.new-beginning').classList.add('sad-mode');
+            document.querySelector('.timer-container').classList.add('sad-mode');
+            document.querySelectorAll('.time-unit').forEach(unit => unit.classList.add('sad-mode'));
+            document.querySelector('.reset-btn').classList.add('sad-mode');
+            document.querySelector('.signature').classList.add('sad-mode');
+            document.querySelector('.signature i').classList.add('sad-mode');
+            document.querySelector('.footer').classList.add('sad-mode');
+            document.querySelectorAll('.footer-heart').forEach(heart => heart.classList.add('sad-mode'));
+            document.querySelector('.sound-container').classList.add('sad-mode');
+            document.querySelector('.sound-btn').classList.add('sad-mode');
+            document.querySelector('.volume-slider').classList.add('sad-mode');
+            document.querySelector('.volume-percentage').classList.add('sad-mode');
+            document.querySelectorAll('.volume-icon').forEach(icon => icon.classList.add('sad-mode'));
+            document.querySelectorAll('.response-btn').forEach(btn => btn.classList.add('sad-mode'));
+           
+            // Agregar caritas tristes flotantes
+            createFloatingSads();
+           
+            // Agregar lágrimas
+            createTears();
+           
+            console.log('😔 Modo triste activado: tiempo se acabó sin respuesta');
+        }
+       
+        function createFloatingSads() {
+            // Remover corazones felices
+            document.querySelectorAll('.floating-heart').forEach(heart => heart.style.display = 'none');
+           
+            // Crear caritas tristes
+            for (let i = 1; i <= 4; i++) {
+                const sad = document.createElement('div');
+                sad.className = `floating-sad sad-${i}`;
+                sad.innerHTML = '😔';
+                document.body.appendChild(sad);
+            }
+        }
+       
+        function createTears() {
+            // Crear lágrimas
+            for (let i = 0; i < 8; i++) {
+                const tear = document.createElement('div');
+                tear.className = 'tear';
+                tear.style.left = Math.random() * 100 + 'vw';
+                tear.style.animationDelay = Math.random() * 2 + 's';
+                document.body.appendChild(tear);
+            }
         }
        
         function showValentinesDayArrived() {
@@ -2188,7 +2924,13 @@
                
                 if (data.record && data.record.valentineResponse === 'yes') {
                     // Si ya aceptó en otro dispositivo
+                    hasResponded = true;
                     showAcceptedResponse();
+                    // Desactivar botón después de responder
+                    const askButton = document.getElementById('askButton');
+                    askButton.classList.add('disabled');
+                    askButton.disabled = true;
+                    askButton.style.cursor = 'not-allowed';
                     updateSyncStatus('connected');
                 } else {
                     updateSyncStatus('connected');
@@ -2203,7 +2945,13 @@
                 // Cargar desde localStorage como respaldo
                 const localResponse = localStorage.getItem('valentineResponse');
                 if (localResponse === 'yes') {
+                    hasResponded = true;
                     showAcceptedResponse();
+                    // Desactivar botón después de responder
+                    const askButton = document.getElementById('askButton');
+                    askButton.classList.add('disabled');
+                    askButton.disabled = true;
+                    askButton.style.cursor = 'not-allowed';
                 }
             }
         }
@@ -2259,6 +3007,9 @@
         function updateBackgroundByTime() {
             const hour = new Date().getHours();
             const body = document.body;
+           
+            // No cambiar fondo si está en modo triste
+            if (isSadMode) return;
            
             if (hour >= 5 && hour < 12) {
                 body.style.background = 'linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)';
@@ -2330,7 +3081,7 @@
        
         function startFloatingHearts() {
             setInterval(() => {
-                if (Math.random() > 0.7) { // 30% de probabilidad
+                if (Math.random() > 0.7 && !isSadMode) { // 30% de probabilidad, solo si no está en modo triste
                     createFloatingHeart();
                 }
             }, 3000);
@@ -2364,35 +3115,8 @@
         // ==============================================
         // SONIDOS Y BOTÓN DE SONIDO
         // ==============================================
-        function setupSoundButton() {
-            const soundBtn = document.getElementById('soundBtn');
-           
-            // Actualizar botón
-            updateSoundButton(soundBtn);
-           
-            soundBtn.addEventListener('click', () => {
-                soundEnabled = !soundEnabled;
-                updateSoundButton(soundBtn);
-               
-                if (soundEnabled) {
-                    // Activar música
-                    document.getElementById('playBtn').click();
-                    playHeartbeatSound();
-                } else {
-                    // Desactivar música
-                    document.getElementById('pauseBtn').click();
-                }
-            });
-        }
-       
         function updateSoundButton(btn) {
-            if (soundEnabled) {
-                btn.innerHTML = '<i class="fas fa-volume-up"></i>';
-                btn.title = 'Desactivar música';
-            } else {
-                btn.innerHTML = '<i class="fas fa-volume-mute"></i>';
-                btn.title = 'Activar música';
-            }
+            // Esta función ya no se necesita porque ahora usamos updateVolumeIcon
         }
        
         function playHeartbeatSound() {
@@ -2625,20 +3349,102 @@
                 return;
             }
            
+            // Resetear todas las variables de estado
+            hasResponded = false;
+            responseMessageShown = false;
+            isSadMode = false;
+           
             // Resetear respuesta local
             localStorage.removeItem('valentineResponse');
            
-            // Resetear botón
+            // Resetear botón principal
             const askButton = document.getElementById('askButton');
             askButton.innerHTML = '<i class="fas fa-heart"></i> ¿Quieres ser mi San Valentín? <i class="fas fa-heart"></i>';
             askButton.style.background = 'linear-gradient(45deg, #e63946, #ff6b8b)';
+            askButton.classList.remove('disabled');
+            askButton.disabled = false;
+            askButton.style.cursor = 'pointer';
+            askButton.classList.remove('sad-mode');
            
-            // Resetear en JSONBin (solo si el usuario no ha aceptado en otro dispositivo)
+            // Resetear botones de respuesta
+            const responseButtons = document.getElementById('responseButtons');
+            responseButtons.style.display = 'none';
+            responseButtons.style.opacity = '0';
+           
+            // Restaurar botón NO a su posición original
+            const noBtn = document.getElementById('noBtn');
+            noBtn.style.position = '';
+            noBtn.style.left = '';
+            noBtn.style.top = '';
+            noBtn.textContent = 'No 😢';
+           
+            // Restaurar botón SÍ a tamaño normal
+            const yesBtn = document.getElementById('yesBtn');
+            yesBtn.style.transform = '';
+           
+            // Eliminar mensajes especiales
+            const specialMessages = document.getElementById('specialMessages');
+            specialMessages.innerHTML = '';
+           
+            // Restaurar modo normal si estaba en modo triste
+            if (document.body.classList.contains('sad-mode')) {
+                // Remover todas las clases sad-mode
+                document.body.classList.remove('sad-mode');
+                document.querySelector('.container').classList.remove('sad-mode');
+                document.querySelector('.header h1').classList.remove('sad-mode');
+                document.querySelectorAll('.heart-icon').forEach(icon => icon.classList.remove('sad-mode'));
+                document.querySelector('.music-control').classList.remove('sad-mode');
+                document.querySelector('.music-title').classList.remove('sad-mode');
+                document.querySelector('.music-title i').classList.remove('sad-mode');
+                document.querySelectorAll('.music-btn').forEach(btn => btn.classList.remove('sad-mode'));
+                document.querySelector('.progress-bar').classList.remove('sad-mode');
+                document.querySelector('.progress-fill').classList.remove('sad-mode');
+                document.querySelector('.message').classList.remove('sad-mode');
+                document.querySelector('.princess').classList.remove('sad-mode');
+                document.querySelector('.new-beginning').classList.remove('sad-mode');
+                document.querySelector('.timer-container').classList.remove('sad-mode');
+                document.querySelectorAll('.time-unit').forEach(unit => unit.classList.remove('sad-mode'));
+                document.querySelector('.reset-btn').classList.remove('sad-mode');
+                document.querySelector('.signature').classList.remove('sad-mode');
+                document.querySelector('.signature i').classList.remove('sad-mode');
+                document.querySelector('.footer').classList.remove('sad-mode');
+                document.querySelectorAll('.footer-heart').forEach(heart => heart.classList.remove('sad-mode'));
+                document.querySelector('.sound-container').classList.remove('sad-mode');
+                document.querySelector('.sound-btn').classList.remove('sad-mode');
+                document.querySelector('.volume-slider').classList.remove('sad-mode');
+                document.querySelector('.volume-percentage').classList.remove('sad-mode');
+                document.querySelectorAll('.volume-icon').forEach(icon => icon.classList.remove('sad-mode'));
+                document.querySelectorAll('.response-btn').forEach(btn => btn.classList.remove('sad-mode'));
+               
+                // Remover caritas tristes
+                document.querySelectorAll('.floating-sad').forEach(sad => sad.remove());
+                document.querySelectorAll('.tear').forEach(tear => tear.remove());
+               
+                // Restaurar corazones felices
+                document.querySelectorAll('.floating-heart').forEach(heart => heart.style.display = '');
+               
+                // Restaurar música a velocidad normal
+                if (backgroundMusic) {
+                    backgroundMusic.playbackRate = 1.0;
+                }
+               
+                // Mostrar contador normal
+                const sadMessageContainer = document.getElementById('sadMessageContainer');
+                sadMessageContainer.style.display = 'none';
+               
+                const countdownContainer = document.getElementById('countdownContainer');
+                countdownContainer.style.display = 'block';
+               
+                const valentineArrived = document.getElementById('valentineArrived');
+                valentineArrived.style.display = 'none';
+            }
+           
+            // Resetear en JSONBin
             await saveResponseToJsonBin('reset');
            
             alert('¡Respuesta reiniciada! Puedes volver a hacer la pregunta 💖');
            
-            // Mostrar confeti
+            // Mostrar confeti de reinicio
             launchConfetti();
         }
     </script>
